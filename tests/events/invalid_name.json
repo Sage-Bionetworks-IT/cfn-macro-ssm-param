@@ -3,6 +3,6 @@
   "requestId": "foo",
   "params": {
     "Type": "String",
-    "Name": "tthyer-test-param"
+    "Name": "test-param"
   }
 }
