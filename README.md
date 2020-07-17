@@ -1,4 +1,4 @@
-# cfn-ssm-param-macro
+# cfn-macro-ssm-param
 
 The `SsmParam` macro allows retrieval of parameters from the SSM Parameter Store.
 
@@ -53,7 +53,7 @@ The Serverless Application Model Command Line Interface (SAM CLI) is an extensio
 Build your application with the `sam build --use-container` command.
 
 ```bash
-cfn-ssm-param-macro$ sam build --use-container
+cfn-macro-ssm-param$ sam build --use-container
 ```
 
 The SAM CLI installs dependencies defined in `ssm_param/requirements.txt`, creates a deployment package, and saves it in the `.aws-sam/build` folder.
@@ -63,7 +63,7 @@ Test a single function by invoking it directly with a test event. An event is a 
 Run functions locally and invoke them with the `sam local invoke` command.
 
 ```bash
-cfn-ssm-param-macro$ sam local invoke SsmParamFunction --event events/event.json
+cfn-macro-ssm-param$ sam local invoke SsmParamFunction --event events/event.json
 ```
 
 ## Fetch, tail, and filter Lambda function logs
@@ -73,7 +73,7 @@ To simplify troubleshooting, SAM CLI has a command called `sam logs`. `sam logs`
 `NOTE`: This command works for all AWS Lambda functions; not just the ones you deploy using SAM.
 
 ```bash
-cfn-ssm-param-macro$ sam logs -n SsmParamFunction --stack-name cfn-ssm-param-macro --tail
+cfn-macro-ssm-param$ sam logs -n SsmParamFunction --stack-name cfn-macro-ssm-param --tail
 ```
 
 You can find more information and examples about filtering Lambda function logs in the [SAM CLI Documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html).
@@ -83,8 +83,8 @@ You can find more information and examples about filtering Lambda function logs 
 Tests are defined in the `tests` folder in this project. Use PIP to install the [pytest](https://docs.pytest.org/en/latest/) and run unit tests.
 
 ```bash
-cfn-ssm-param-macro$ pip install pytest pytest-mock --user
-cfn-ssm-param-macro$ python -m pytest tests/ -v
+cfn-macro-ssm-param$ pip install pytest pytest-mock --user
+cfn-macro-ssm-param$ python -m pytest tests/ -v
 ```
 
 ## Cleanup
@@ -92,7 +92,7 @@ cfn-ssm-param-macro$ python -m pytest tests/ -v
 To delete the sample application that you created, use the AWS CLI. Assuming you used your project name for the stack name, you can run the following:
 
 ```bash
-aws cloudformation delete-stack --stack-name cfn-ssm-param-macro
+aws cloudformation delete-stack --stack-name cfn-macro-ssm-param
 ```
 
 ## Author
