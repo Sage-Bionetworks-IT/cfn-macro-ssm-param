@@ -36,7 +36,7 @@ class TestHandler(unittest.TestCase):
 
   # happy path
   def test_string(self):
-    ssm = boto3.client('ssm')
+    ssm = boto3.client('ssm', region_name='us-east-1')
     with Stubber(ssm) as stubber:
       expected_value = 'first test string'
       response = self.create_mock_response('String', expected_value)
@@ -92,7 +92,7 @@ class TestHandler(unittest.TestCase):
 
   # expect failure if an invalid name is used
   def test_invalid_name(self):
-    ssm = boto3.client('ssm')
+    ssm = boto3.client('ssm', region_name='us-east-1')
     with Stubber(ssm) as stubber:
       stubber.add_client_error(
         method='get_parameter',

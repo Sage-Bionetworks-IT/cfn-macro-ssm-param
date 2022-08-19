@@ -35,7 +35,7 @@ Resources:
     Properties:
       CodeUri: ssm_param/
       Handler: app.handler
-      Runtime: python3.6
+      Runtime: python3.9
       Role: !ImportValue us-east-1-bootstrap-SsmParamLambdaExecutionRoleArn
       Tags:
         Department: !Ref Department
