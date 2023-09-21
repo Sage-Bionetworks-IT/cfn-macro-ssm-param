@@ -130,3 +130,6 @@ dmypy.json
 
 # jetbrains
 .idea/
+
+# generated dynamically from Pipfile
+ssm_param/requirements.txt
