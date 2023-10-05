@@ -27,8 +27,8 @@ Parameters:
   CfnExportLambdaExecutionRole:
     Description: 'The cloudformation export value of the lambda execution role'
     Type: String
-  CfnExportLambdaServiceRoleArn:
-    Description: 'The cloudformation export value of the lambda service role ARN'
+  CfnExportLambdaServiceRole:
+    Description: 'The cloudformation export value of the lambda service role'
     Type: String
 
 Globals:
@@ -60,7 +60,7 @@ Resources:
       Action: lambda:InvokeFunction
       FunctionName: !Ref SsmParamFunction
       Principal: !Ref 'AWS::AccountId'
-      SourceArn: !Ref CfnExportLambdaServiceRoleArn
+      SourceArn: !Ref CfnExportLambdaServiceRole
 
 Outputs:
   SsmParamFunctionName:
