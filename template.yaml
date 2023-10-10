@@ -24,10 +24,10 @@ Parameters:
     AllowedPattern: '^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
     ConstraintDescription: 'Must be an acceptable email address syntax(i.e. joe.smith@sagebase.org)'
     Default: 'it@sagebase.org'
-  CfnExportLambdaExecutionRoleArn:
+  LambdaExecutionRoleArn:
     Description: 'The ARN of the role used to execute this lambda'
     Type: String
-  CfnExportLambdaServiceRoleArn:
+  LambdaServiceRoleArn:
     Description: 'The ARN of the role used to invoke this lambda'
     Type: String
 
@@ -42,7 +42,7 @@ Resources:
       CodeUri: ssm_param/
       Handler: app.handler
       Runtime: python3.9
-      Role: !Ref CfnExportLambdaExecutionRoleArn
+      Role: !Ref LambdaExecutionRoleArn
       Tags:
         Department: !Ref Department
         Project: !Ref Project
@@ -60,7 +60,7 @@ Resources:
       Action: lambda:InvokeFunction
       FunctionName: !Ref SsmParamFunction
       Principal: !Ref 'AWS::AccountId'
-      SourceArn: !Ref CfnExportLambdaServiceRoleArn
+      SourceArn: !Ref LambdaServiceRoleArn
 
 Outputs:
   SsmParamFunctionName:
