@@ -50,19 +50,74 @@ The Serverless Application Model Command Line Interface (SAM CLI) is an extensio
 
 ## Use the SAM CLI to build and test locally
 
-Build your application with the `sam build --use-container` command.
+### Setup Development Environment
 
-```bash
+Install the following applications:
+* [AWS CLI](https://github.com/aws/aws-cli)
+* [AWS SAM CLI](https://github.com/aws/aws-sam-cli)
+* [pre-commit](https://github.com/pre-commit/pre-commit)
+* [pipenv](https://github.com/pypa/pipenv)
+
+### Install Requirements
+
+Run `pipenv install --dev` to install both production and development
+requirements, and `pipenv shell` to activate the virtual environment. For more
+information see the [pipenv docs](https://pipenv.pypa.io/en/latest/).
+
+After activating the virtual environment, run `pre-commit install` to install
+the [pre-commit](https://pre-commit.com/) git hook.
+
+### Update Requirements
+
+First, make any needed updates to the base requirements in `Pipfile`, then use
+`pipenv` to regenerate both `Pipfile.lock` and `requirements.txt`.
+
+```shell script
+$ pipenv update --dev
+```
+
+We use `pipenv` to control versions in testing, but `sam` relies on
+`requirements.txt` directly for building the lambda artifact, so we dynamically
+generate `requirements.txt` from `Pipfile.lock` before building the artifact.
+The file must be created in the `CodeUri` directory specified in
+`template.yaml`.
+
+```shell script
+$ pipenv requirements > ssm_param/requirements.txt
+```
+
+Additionally, `pre-commit` manages its own requirements.
+
+```shell script
+$ pre-commit autoupdate
+```
+
+### Create a local build
+
+Use a Lambda-like docker container to build the Lambda artifact
+
+```shell script
 $ sam build --use-container
 ```
 
-The SAM CLI installs dependencies defined in `ssm_param/requirements.txt`, creates a deployment package, and saves it in the `.aws-sam/build` folder.
+### Run unit tests
 
-Test a single function by invoking it directly with a test event. An event is a JSON document that represents the input that the function receives from the event source. Test events are included in the `events` folder in this project.
+Tests are defined in the `tests` folder in this project, and dependencies are
+managed with `pipenv`. Install the development dependencies and run the tests
+using `coverage`.
 
-Run functions locally and invoke them with the `sam local invoke` command.
+```shell script
+$ pipenv run coverage run -m pytest tests/ -svv
+```
 
-```bash
+Automated testing will upload coverage results to [Coveralls](coveralls.io).
+
+### Run integration tests
+
+Running integration tests
+[requires docker](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-local-start-api.html)
+
+```shell script
 $ sam local invoke SsmParamFunction --event events/event.json
 ```
 
@@ -77,15 +132,6 @@ $ sam logs -n SsmParamFunction --stack-name cfn-macro-ssm-param --tail
 ```
 
 You can find more information and examples about filtering Lambda function logs in the [SAM CLI Documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html).
-
-## Unit tests
-
-Tests are defined in the `tests` folder in this project. Use PIP to install the [pytest](https://docs.pytest.org/en/latest/) and run unit tests.
-
-```bash
-$ pip install pytest pytest-mock --user
-$ python -m pytest tests/ -v
-```
 
 ## Cleanup
 
