@@ -15,7 +15,7 @@ coverage = "~=7.0"
 
 [packages]
 crhelper = "~=2.0"
-synapseclient = "~=2.6"
+urllib3 = "<2"
 
 [requires]
 python_version = "3.9"
