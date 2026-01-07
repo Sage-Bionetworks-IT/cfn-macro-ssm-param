@@ -41,7 +41,7 @@ Resources:
     Properties:
       CodeUri: ssm_param/
       Handler: app.handler
-      Runtime: python3.9
+      Runtime: python3.13
       Role: !Ref LambdaExecutionRoleArn
       Tags:
         Department: !Ref Department
